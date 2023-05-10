@@ -1,13 +1,15 @@
 #include <iostream>
 #include <unistd.h>
+#define WIDTH 30
+#define HEIGHT 10
 
-void buildarr(char arr[][5]);
-void printarr(char arr[][5]);
-void loading(char arr[][5]);
-
+void buildarr(char arr[][WIDTH]);
+void printarr(char arr[][WIDTH]);
+void loading(char arr[][WIDTH]);
 int main ()
 {
-    char arr[5][5];
+    system("clear");
+    char arr[HEIGHT][WIDTH];
     buildarr(arr);
 
     loading(arr);
@@ -17,18 +19,18 @@ int main ()
 }
 
 
-void loading(char arr[][5])
+void loading(char arr[][WIDTH])
 {
     for (int i = 0; i < 5; i++)
     {
         printarr(arr);
         if (i % 2 == 0)
         {
-            arr[2][2] = 'X';
+            arr[HEIGHT/2][WIDTH/2] = 'X';
         }
         else 
         {
-            arr[2][2] = 'O';
+            arr[HEIGHT/2][WIDTH/2] = 'O';
         }
         sleep(1);
         system("clear");
@@ -36,11 +38,11 @@ void loading(char arr[][5])
 }
 
 
-void buildarr(char arr[][5])
+void buildarr(char arr[][WIDTH])
 {
-    for (int row = 0; row < 5; row++)
+    for (int row = 0; row < HEIGHT; row++)
     {
-        for (int col = 0; col < 5; col++)
+        for (int col = 0; col < WIDTH; col++)
         {
             arr[row][col] = '0';
         }
@@ -48,11 +50,11 @@ void buildarr(char arr[][5])
 }
 
 
-void printarr(char arr[][5])
+void printarr(char arr[][WIDTH])
 {
-    for (int row = 0; row < 5; row++)
+    for (int row = 0; row < HEIGHT; row++)
     {
-        for (int col = 0; col < 5; col++)
+        for (int col = 0; col < WIDTH; col++)
         {
             std::cout << arr[row][col];
         }
