@@ -1,0 +1,3 @@
+/home/walruii/Documents/repos/Learn/cpp/test/build/CMakeFiles/main.dir
+/home/walruii/Documents/repos/Learn/cpp/test/build/CMakeFiles/edit_cache.dir
+/home/walruii/Documents/repos/Learn/cpp/test/build/CMakeFiles/rebuild_cache.dir
