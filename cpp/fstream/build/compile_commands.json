@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/home/walruii/Documents/repos/Learn/cpp/fstream/build",
+  "command": "/usr/bin/c++   -std=gnu++17 -o CMakeFiles/main.dir/src/main.cpp.o -c /home/walruii/Documents/repos/Learn/cpp/fstream/src/main.cpp",
+  "file": "/home/walruii/Documents/repos/Learn/cpp/fstream/src/main.cpp",
+  "output": "CMakeFiles/main.dir/src/main.cpp.o"
+}
+]
