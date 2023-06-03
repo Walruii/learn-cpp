@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/main.dir/src/classes.cpp.o -o main  liblib.a 
