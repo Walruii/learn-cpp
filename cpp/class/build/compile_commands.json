@@ -1,0 +1,14 @@
+[
+{
+  "directory": "/home/walruii/Documents/repos/Learn/cpp/class/build",
+  "command": "/usr/bin/c++  -I/home/walruii/Documents/repos/Learn/cpp/class/lib/include -std=gnu++17 -o CMakeFiles/lib.dir/lib/employee.cpp.o -c /home/walruii/Documents/repos/Learn/cpp/class/lib/employee.cpp",
+  "file": "/home/walruii/Documents/repos/Learn/cpp/class/lib/employee.cpp",
+  "output": "CMakeFiles/lib.dir/lib/employee.cpp.o"
+},
+{
+  "directory": "/home/walruii/Documents/repos/Learn/cpp/class/build",
+  "command": "/usr/bin/c++  -I/home/walruii/Documents/repos/Learn/cpp/class/lib/include -std=gnu++17 -o CMakeFiles/main.dir/src/classes.cpp.o -c /home/walruii/Documents/repos/Learn/cpp/class/src/classes.cpp",
+  "file": "/home/walruii/Documents/repos/Learn/cpp/class/src/classes.cpp",
+  "output": "CMakeFiles/main.dir/src/classes.cpp.o"
+}
+]
