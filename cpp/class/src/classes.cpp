@@ -3,8 +3,8 @@
 
 int main ()
 {
-    Developer d = Developer("Inderpreet", "Nalla Corp", 18, "cpp");
-    Teacher t = Teacher("Matthew", "Techers Corp", 18, "Java");
+    Developer d ("Inderpreet", "Nalla Corp", 18, "cpp");
+    Teacher t ("Matthew", "Techers Corp", 18, "Java");
     d.FixBug();
     d.AskForPromotion();
     Employee *e1 = &d;
