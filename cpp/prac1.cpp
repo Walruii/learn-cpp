@@ -1,19 +1,19 @@
 #include <iostream>
+using namespace std;
 
 int main () {
 
     char names[10][50];
-    /* std::string names[10]; */
     int n;
-    std::cout << "Enter the number of students up to 10" << std::endl;
-    std::cin >> n;
-    std::cout << "Enter the names" << std::endl;
+    cout << "Enter the number of students up to 10" << endl;
+    cin >> n;
+    cout << "Enter the names" << endl;
     for (int i = 0; i < n; i++) {
-        std::cin >> names[i];
+        cin >> names[i];
     }
-    std::cout << std::endl;
+    cout << endl;
     for (int i = 0; i < n; i++) {
-        std::cout << names[i] << std::endl;
+        cout << names[i] << endl;
     }
     return 0; 
 }
