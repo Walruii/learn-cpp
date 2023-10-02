@@ -1,69 +1,69 @@
 #include <iostream>
+using namespace std;
 
-typedef struct node 
+class LinkedList
 {
-    int number;
-    struct node *next;
-} node;
+  typedef struct node
+  {
+    int value;
+    struct node *link;
+  } node;
+  node *start;
+  node *back;
 
+public:
+  LinkedList() : start(NULL), back(NULL) {}
+  /* ~LinkedList() */
+  /* { */
+  /*   delete back; */
+  /*   while (start != NULL) */
+  /*   { */
+  /*     node *tmp = start->link; */
+  /*     delete start; */
+  /*     start = tmp; */
+  /*   } */
+  /* } */
+
+  void push_back(int a)
+  {
+    node *newNode = new node;
+    newNode->link = NULL;
+    newNode->value = a;
+    if (start == NULL)
+    {
+      start = newNode;
+    }
+    else
+    {
+      back->link = newNode;
+    }
+    back = newNode;
+  }
+
+  void display()
+  {
+    node *tmp = start;
+    while (tmp != NULL)
+    {
+      cout << tmp->value;
+      tmp = tmp->link;
+    }
+    cout << endl;
+    delete tmp;
+  }
+};
 
 int main()
 {
-    node *list = NULL;
+  LinkedList l1;
+  l1.push_back(1);
+  l1.push_back(2);
+  l1.push_back(3);
+  l1.push_back(4);
+  l1.push_back(5);
+  l1.push_back(6);
+  l1.push_back(7);
+  l1.display();
 
-    // Adding a number to the list
-    node *n = malloc(sizeof(node));
-
-    if (n == NULL)
-    {
-        return -1;
-    }
-    n->number = 1;
-    n->next = NULL;
-
-    // Update list to point to nodes
-    list = n;
-
-    // Add a number 
-    n = malloc(sizeof(node));
-    if (n == NULL)
-    {
-        free(list);
-        return 1;
-    }
-
-    n->number = 2;
-    n->next = NULL;
-
-    list->next = n;
-    // Add another number 
-    n = malloc(sizeof(node));
-    if (n == NULL)
-    {
-        free(list->next);
-        free(list);
-        return 1;
-    }
-
-    n->number = 3;
-    n->next = NULL;
-
-    list->next->next = n;
-    
-    for (node *tmp = NULL; tmp->next != NULL; tmp = tmp->next)
-    {
-        printf("%d", tmp->number);
-    }
-    return 0;
-
-    while(list != NULL)
-    {
-        node *tmp = list->next;
-        free(list);
-        list = tmp;
-    }
-    /* for (node *tmp = list->next; list != NULL; list = tmp) */
-    /* { */
-    /*     free(list); */
-    /* } */
+  return 0;
 }
