@@ -1,0 +1,44 @@
+#include <iostream>
+using namespace std;
+
+/*
+  int x
+  > 10 success
+  < 10 error
+  1 = error (system hang)
+  2 = (disc fail)
+  3 = no internet
+ */
+
+int main() {
+
+  int x = 1;
+
+  try {
+    // ALOT OF CODE
+    cout << "testing 1" << endl;
+    cout << "testing 2" << endl;
+    if (x < 10) {
+      throw x;
+    }
+    cout << "testing 3" << endl;
+    cout << "SUCCESS";
+
+  } catch (int a) {
+    if (a == 1) {
+
+      cout << "ERROR is system hanged  " << a << endl;
+    } else if (a == 2) {
+
+      cout << "ERROR is disc failure  " << a << endl;
+    } else if (a == 3) {
+
+      cout << "ERROR is no internet  " << a << endl;
+    } else {
+
+      cout << "ERROR is no internet  " << a << endl;
+    }
+  }
+
+  return 0;
+}

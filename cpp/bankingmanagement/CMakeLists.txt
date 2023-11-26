@@ -1,0 +1,14 @@
+cmake_minimum_required(VERSION 3.10)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+add_library(lib1 STATIC lib/bank.cpp)
+add_library(lib2 STATIC lib/user.cpp)
+# target_include_directories(lib1 PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/lib/include/bank.cpp)
+# target_include_directories(lib1 PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/lib/include/user.cpp)
+
+project(bankManagement VERSION 1.0)
+add_executable(main src/main.cpp)
+# target_include_directories(main PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_link_libraries(main PUBLIC lib1 lib2)
