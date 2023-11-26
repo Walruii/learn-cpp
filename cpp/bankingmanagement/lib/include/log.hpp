@@ -1,8 +1,5 @@
 #pragma once
-#include "user.hpp"
 #include <iostream>
-#include <vector>
-
 using namespace std;
 
 class transactionLog {
@@ -17,5 +14,4 @@ public:
   double getAmount();
   int getUserId();
   int getMode();
-  /* vector<transactionLog> getTransctionByUserId(); */
 };

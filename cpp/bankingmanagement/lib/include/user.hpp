@@ -5,10 +5,10 @@ using namespace std;
 class user {
   string name;
   int userId;
-  int pin;
   double balance;
 
 public:
+  int pin;
   user(string name, int userId, int pin);
   double const getBalance();
   void showBalance();

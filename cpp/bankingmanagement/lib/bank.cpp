@@ -17,8 +17,9 @@ int bank::debitUser(int userId, double amount) {
 int bank::createUser(string name, int pin) {
   int userId = users.size();
   user user1(name, userId, pin);
+  users.push_back(user1);
   cout << "User Created!" << endl;
-  return userId;
+  return userId + 1;
 }
 
 void bank::deleteUser(int userId, int pin) {
@@ -39,6 +40,7 @@ void bank::showTransactions() {
        << "USERID\t\t"
        << "MODE\t\t"
        << "AMOUNT" << endl;
+
   for (int i = 0; i < logBook.size(); i++) {
     cout << logBook[i].getId() << "\t\t" << logBook[i].getUserId() << "\t\t"
          << logBook[i].getMode() << "\t\t" << logBook[i].getAmount();

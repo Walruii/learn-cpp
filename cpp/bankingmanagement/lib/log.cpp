@@ -1,8 +1,5 @@
 #include "./include/log.hpp"
-#include "./include/bank.hpp"
 #include <iostream>
-#include <vector>
-
 using namespace std;
 
 transactionLog::transactionLog(int userId, double amount, int id, int mode)
