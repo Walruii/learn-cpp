@@ -10,10 +10,11 @@ class gui {
   bank hdfc;
   bool loginInStatus;
   int loginedUser;
+  string loginedName;
   public:
   gui();
   void mainMenu();
-  void logedInMenu();
+  void loggedInMenu();
   void loginUser();
   void createUser();
   void listUsers();

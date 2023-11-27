@@ -7,10 +7,12 @@ using namespace std;
 
 bank::bank() : MoneyInBank(0) {}
 void bank::creditUser(int userId, double amount) {
+  addTransaction(userId, amount, 1);
   users[userId - 1].creditBalance(amount);
 }
 
 int bank::debitUser(int userId, double amount) {
+  addTransaction(userId, amount, 0);
   return users[userId - 1].debitBalance(amount);
 }
 
@@ -35,6 +37,21 @@ void bank::addTransaction(int userId, double amount, int mode) {
   logBook.push_back(log);
 }
 
+void bank::showUserTransactions(int userId) {
+  cout << "ID\t\t"
+       << "USERID\t\t"
+       << "MODE\t\t"
+       << "AMOUNT" << endl;
+
+  for (int i = 0; i < logBook.size(); i++) {
+    if (logBook[i].getUserId() == userId) {
+      string mode = (logBook[i].getMode()) ? "Credit" : "Debit";
+      cout << logBook[i].getId() << "\t\t" << logBook[i].getUserId() << "\t\t"
+           << mode << "\t\t" << logBook[i].getAmount() << endl;
+    }
+  }
+}
+
 void bank::showTransactions() {
   cout << "ID\t\t"
        << "USERID\t\t"
@@ -42,7 +59,14 @@ void bank::showTransactions() {
        << "AMOUNT" << endl;
 
   for (int i = 0; i < logBook.size(); i++) {
+    string mode = (logBook[i].getMode()) ? "Credit" : "Debit";
     cout << logBook[i].getId() << "\t\t" << logBook[i].getUserId() << "\t\t"
-         << logBook[i].getMode() << "\t\t" << logBook[i].getAmount();
+         << mode << "\t\t" << logBook[i].getAmount() << endl;
   }
 }
+
+bool bank::comparePin(int userId, int pin) {
+  return users[userId - 1].comparePin(pin);
+}
+
+void bank::showUserBalance(int userId) { users[userId - 1].showBalance(); }

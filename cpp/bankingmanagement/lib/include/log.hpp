@@ -6,7 +6,7 @@ class transactionLog {
   int id;
   double amount;
   int userId;
-  int mode; // 1 for credit , 2 for debit
+  int mode; // 1 for credit , 0 for debit
 
 public:
   transactionLog(int userId, double amount, int id, int mode);

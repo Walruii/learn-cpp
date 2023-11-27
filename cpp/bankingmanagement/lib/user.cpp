@@ -3,7 +3,7 @@
 using namespace std;
 
 user::user(string name, int userId, int pin)
-    : name(name), userId(userId), pin(1111), balance(0) {}
+    : name(name), userId(userId), pin(pin | 1111), balance(0) {}
 
 double const user::getBalance() { return balance; }
 
