@@ -2,10 +2,14 @@
 #include "./include/bank.hpp"
 #include "./include/log.hpp"
 #include "./include/user.hpp"
+#include <fstream>
 #include <iostream>
 #include <vector>
 
-gui::gui() : loginInStatus(false), loginedUser(-1), loginedName("") { mainMenu(); }
+gui::gui() : loginInStatus(false), loginedUser(-1), loginedName("") {
+  bootloader();
+  mainMenu();
+}
 
 void gui::mainMenu() {
   int flag = 1;
@@ -18,6 +22,7 @@ void gui::mainMenu() {
     cout << "3. Create User" << endl;
     cout << "4. Banklog" << endl;
     cout << "5. List users" << endl;
+    /* cout << "6. Delete user" << endl; */
     cout << "0. Exit" << endl;
     cout << "********************" << endl;
     cout << "type: ";
@@ -39,6 +44,9 @@ void gui::mainMenu() {
       break;
     case 5:
       listUsers();
+      break;
+    case 6:
+      deleteUser();
       break;
     default:
       break;
@@ -77,13 +85,36 @@ void gui::createUser() {
   string name;
   int pin;
   cout << "\nCreating User" << endl;
-  cout << "NAME: ";
-  getchar();
-  getline(cin, name);
+  cout << "NAME(No space!): ";
+  cin >> name;
   cout << "PIN:";
   cin >> pin;
   int userId = hdfc.createUser(name, pin);
   cout << "Your userId is " << userId << endl;
+}
+
+void gui::deleteUser() {
+  int userId;
+  int pin;
+  bool success = false;
+  cout << "\nDeleting User" << endl;
+  cout << "USERID: ";
+  cin >> userId;
+  if (userId > hdfc.users.size() || userId == 0) {
+    cout << "Invaild userId";
+    return;
+  }
+  while (success == false) {
+    cout << "PIN: ";
+    cin >> pin;
+    success = hdfc.comparePin(userId, pin);
+  }
+
+  if (success) {
+    hdfc.removeUserFromFile(hdfc.users[userId - 1]);
+  } else {
+    cout << "Auth Failed!";
+  }
 }
 
 void gui::listUsers() {
@@ -152,9 +183,13 @@ void gui::withdraw() {
     success = hdfc.comparePin(loginedUser, pin);
   }
   if (success) {
-    hdfc.debitUser(loginedUser, amount);
-    cout << "Account debited" << endl;
-    hdfc.showUserBalance(loginedUser);
+    int debitSuccess = hdfc.debitUser(loginedUser, amount);
+    if (debitSuccess == -1) {
+      cout << "Transaction failed!";
+    } else {
+      cout << "Account debited" << endl;
+      hdfc.showUserBalance(loginedUser);
+    }
   } else {
     cout << "Wrong Pin" << endl;
   }
@@ -179,4 +214,23 @@ void gui::deposit() {
   } else {
     cout << "Wrong Pin" << endl;
   }
+}
+
+void gui::bootloader() {
+  ifstream inputFile("users.txt");
+
+  if (!inputFile.is_open()) {
+    cerr << "Error opening file!" << endl;
+    return;
+  }
+
+  // File operations go here
+
+  user u1("test", -1, 0);
+
+  while (inputFile >> u1) {
+    hdfc.users.push_back(u1);
+  }
+
+  inputFile.close(); // Always close the file when done
 }

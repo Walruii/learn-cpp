@@ -14,6 +14,7 @@ public:
   vector<user> users;
   bank();
   void addTransaction(int userId, double amount, int mode);
+  void addTransactionToFile(transactionLog log);
   void showUserTransactions(int userId);
   void showTransactions();
   void creditUser(int userId, double amount);
@@ -22,4 +23,6 @@ public:
   void deleteUser(int userId, int pin);
   bool comparePin(int userId, int pin);
   void showUserBalance(int userId);
+  void addUserToFile(user u1);
+  void removeUserFromFile(user u1);
 };

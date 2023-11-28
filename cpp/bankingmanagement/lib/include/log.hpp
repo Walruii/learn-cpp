@@ -14,4 +14,6 @@ public:
   double getAmount();
   int getUserId();
   int getMode();
+  friend std::ostream &operator<<(std::ostream &os, const transactionLog &log);
+  friend std::istream &operator>>(std::istream &is, transactionLog &log);
 };

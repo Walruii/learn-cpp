@@ -1,5 +1,6 @@
 #include "./include/user.hpp"
 #include <iostream>
+#include <fstream>
 using namespace std;
 
 user::user(string name, int userId, int pin)
@@ -35,4 +36,15 @@ bool const user::comparePin(int pin) {
 
 void user::showBalance() {
   cout << "Balance of " << name << " is " << balance << "." << endl;
+}
+
+ostream &operator<<(ostream &os, const user &user) {
+  os << user.name << " " << user.userId << " " << user.pin << " " << user.balance;
+  return os;
+}
+
+// Define the >> operator for reading from a file
+istream &operator>>(istream &is, user &user) {
+  is >> user.name >> user.userId >> user.pin >> user.balance;
+  return is;
 }

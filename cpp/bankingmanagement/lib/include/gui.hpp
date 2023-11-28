@@ -17,8 +17,10 @@ class gui {
   void loggedInMenu();
   void loginUser();
   void createUser();
+  void deleteUser();
   void listUsers();
   void logoutUser();
   void withdraw();
   void deposit();
+  void bootloader();
 };

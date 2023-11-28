@@ -18,5 +18,6 @@ public:
   void setName(string name);
   int const getUserId();
   bool const comparePin(int pin);
+  friend std::ostream &operator<<(std::ostream &os, const user &user);
+  friend std::istream &operator>>(std::istream &is, user &user);
 };
-
