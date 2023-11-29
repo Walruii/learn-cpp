@@ -10,10 +10,10 @@ class transactionLog {
 
 public:
   transactionLog(int userId, double amount, int id, int mode);
-  int getId();
-  double getAmount();
-  int getUserId();
-  int getMode();
+  int getId() const;
+  double getAmount() const;
+  int getUserId() const;
+  int getMode() const;
   friend std::ostream &operator<<(std::ostream &os, const transactionLog &log);
   friend std::istream &operator>>(std::istream &is, transactionLog &log);
 };

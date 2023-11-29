@@ -1,12 +1,12 @@
 #include "./include/user.hpp"
-#include <iostream>
 #include <fstream>
+#include <iostream>
 using namespace std;
 
 user::user(string name, int userId, int pin)
-    : name(name), userId(userId), pin(pin | 1111), balance(0) {}
+    : name(name), userId(userId), pin(pin), balance(0) {}
 
-double const user::getBalance() { return balance; }
+double user::getBalance() const { return balance; }
 
 void user::creditBalance(double amount) { balance += amount; }
 
@@ -20,13 +20,15 @@ int user::debitBalance(double amount) {
   }
 }
 
-string const user::getName() { return name; }
+string user::getName() const { return name; }
+
+int user::getPin() const { return pin; }
 
 void user::setName(string name) { this->name = name; }
 
-int const user::getUserId() { return userId; }
+int user::getUserId() const { return userId; }
 
-bool const user::comparePin(int pin) {
+bool user::comparePin(int pin) const {
   if (pin == this->pin) {
     return true;
   } else {
@@ -34,12 +36,13 @@ bool const user::comparePin(int pin) {
   }
 }
 
-void user::showBalance() {
+void user::showBalance() const {
   cout << "Balance of " << name << " is " << balance << "." << endl;
 }
 
 ostream &operator<<(ostream &os, const user &user) {
-  os << user.name << " " << user.userId << " " << user.pin << " " << user.balance;
+  os << user.name << " " << user.userId << " " << user.pin << " "
+     << user.balance;
   return os;
 }
 

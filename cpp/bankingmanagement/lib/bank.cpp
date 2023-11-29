@@ -6,14 +6,16 @@
 #include <vector>
 using namespace std;
 
-bank::bank() : MoneyInBank(0) {}
+bank::bank() : MoneyInBank(0), userIdCount(1), logIdCount(1) {}
 void bank::creditUser(int userId, double amount) {
   addTransaction(userId, amount, 1);
-  users[userId - 1].creditBalance(amount);
+  user *usr1 = getUser(userId);
+  usr1->creditBalance(amount);
 }
 
 int bank::debitUser(int userId, double amount) {
-  int success = users[userId - 1].debitBalance(amount);
+  user *usr1 = getUser(userId);
+  int success = usr1->debitBalance(amount);
   if (success == -1) {
     return -1;
   }
@@ -21,31 +23,53 @@ int bank::debitUser(int userId, double amount) {
   return 1;
 }
 
+user *bank::getUser(int userId) const {
+  for (const auto &currentUser : users) {
+    if (currentUser.getUserId() == userId) {
+      return const_cast<user *>(
+          &currentUser); // Safe because it's a copy of the iterator
+    }
+  }
+  return nullptr;
+}
+
 int bank::createUser(string name, int pin) {
-  int userId = users.size();
-  user user1(name, userId, pin);
+  int id = userIdCount;
+  user user1(name, id, pin);
+  userIdCount++;
+  updateCountToFile();
   users.push_back(user1);
   addUserToFile(user1);
   cout << "User Created!" << endl;
-  return userId + 1;
+  return id;
 }
 
 void bank::deleteUser(int userId, int pin) {
-  if (users[userId - 1].comparePin(pin)) {
-    removeUserFromFile(users[userId - 1]);
-    users.erase(users.begin() + userId - 1);
-    cout << "User deleted!" << endl;
+  for (vector<user>::iterator it = users.begin(); it != users.end(); it++) {
+    if (it->getUserId() == userId) {
+      if (it->getPin() == pin) {
+        removeUserFromFile(*it);
+        users.erase(it);
+        cout << "User deleted!" << endl;
+        return;
+      }
+      cout << "Incorrect Pin";
+      break;
+    }
   }
+  cout << "User not found!" << endl;
 };
 
 void bank::addTransaction(int userId, double amount, int mode) {
-  int id = logBook.size() + 1;
+  int id = logIdCount;
+  logIdCount++;
+  updateCountToFile();
   transactionLog log(userId, amount, id, mode);
   addTransactionToFile(log);
   logBook.push_back(log);
 }
 
-void bank::showUserTransactions(int userId) {
+void bank::showUserTransactions(int userId) const {
   cout << "ID\t\t"
        << "USERID\t\t"
        << "MODE\t\t"
@@ -60,7 +84,7 @@ void bank::showUserTransactions(int userId) {
   }
 }
 
-void bank::showTransactions() {
+void bank::showTransactions() const {
   cout << "ID\t\t"
        << "USERID\t\t"
        << "MODE\t\t"
@@ -73,13 +97,20 @@ void bank::showTransactions() {
   }
 }
 
-bool bank::comparePin(int userId, int pin) {
-  return users[userId - 1].comparePin(pin);
+bool bank::comparePin(int userId, int pin) const {
+  user *usr1 = getUser(userId);
+  if (!usr1) {
+    return false;
+  }
+  return usr1->comparePin(pin);
 }
 
-void bank::showUserBalance(int userId) { users[userId - 1].showBalance(); }
+void bank::showUserBalance(int userId) const {
+  user *usr1 = getUser(userId);
+  usr1->showBalance();
+}
 
-void bank::addUserToFile(user u1) {
+void bank::addUserToFile(const user &u1) const {
   ofstream outputFile("users.txt", ios::app);
 
   if (!outputFile.is_open()) {
@@ -92,7 +123,7 @@ void bank::addUserToFile(user u1) {
   outputFile.close();
 }
 
-void bank::removeUserFromFile(user u1) {
+void bank::removeUserFromFile(const user &u1) const {
 
   ifstream inputFile("users.txt");
   ofstream outputFile("temp.txt");
@@ -135,12 +166,11 @@ void bank::removeUserFromFile(user u1) {
   }
 
   while (inputFile >> fileUser) {
-    inputFile >> fileUser;
     outputFile << fileUser << endl;
   }
 }
 
-void bank::addTransactionToFile(transactionLog log) {
+void bank::addTransactionToFile(const transactionLog &log) const {
 
   ofstream outputFile("log.txt", ios::app);
 
@@ -153,3 +183,20 @@ void bank::addTransactionToFile(transactionLog log) {
 
   outputFile.close();
 }
+
+void bank::updateCountToFile() const {
+  ofstream outputFile("bankInfo.txt");
+
+  if (!outputFile.is_open()) {
+    cerr << "Error opening file!" << endl;
+    return;
+  }
+
+  outputFile << userIdCount << " " << logIdCount << endl;
+
+  outputFile.close();
+}
+int bank::getUserIdCount() const { return userIdCount; }
+int bank::getLogIdCount() const { return logIdCount; }
+void bank::setUserIdCount(int userIdCount) { this->userIdCount = userIdCount; }
+void bank::setLogIdCount(int logIdCount) { this->logIdCount = logIdCount; }

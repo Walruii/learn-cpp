@@ -57,24 +57,26 @@ void gui::mainMenu() {
 void gui::loginUser() {
   int userId;
   int pin;
+  int tries = 1;
   bool success = false;
   cout << "\nLogingin User" << endl;
   cout << "USERID: ";
   cin >> userId;
-  if (userId > hdfc.users.size() || userId == 0) {
+  if (userId > hdfc.getUserIdCount() || userId == 0) {
     cout << "Invaild userId";
     return;
   }
-  while (success == false) {
+  while (success == false && tries != 4) {
     cout << "PIN: ";
     cin >> pin;
     success = hdfc.comparePin(userId, pin);
+    tries++;
   }
 
   if (success) {
     loginInStatus = true;
     loginedUser = userId;
-    loginedName = hdfc.users[loginedUser - 1].getName();
+    loginedName = hdfc.getUser(userId)->getName();
     loggedInMenu();
   } else {
     cout << "Login Failed!";
@@ -89,6 +91,7 @@ void gui::createUser() {
   cin >> name;
   cout << "PIN:";
   cin >> pin;
+  cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
   int userId = hdfc.createUser(name, pin);
   cout << "Your userId is " << userId << endl;
 }
@@ -96,22 +99,24 @@ void gui::createUser() {
 void gui::deleteUser() {
   int userId;
   int pin;
+  int tries = 1;
   bool success = false;
   cout << "\nDeleting User" << endl;
   cout << "USERID: ";
   cin >> userId;
-  if (userId > hdfc.users.size() || userId == 0) {
+  if (userId > hdfc.getUserIdCount() || userId == 0) {
     cout << "Invaild userId";
     return;
   }
-  while (success == false) {
+  while (success == false && tries != 4) {
     cout << "PIN: ";
     cin >> pin;
     success = hdfc.comparePin(userId, pin);
+    tries++;
   }
 
   if (success) {
-    hdfc.removeUserFromFile(hdfc.users[userId - 1]);
+    hdfc.deleteUser(userId, pin);
   } else {
     cout << "Auth Failed!";
   }
@@ -120,8 +125,8 @@ void gui::deleteUser() {
 void gui::listUsers() {
   for (int i = 0; i < hdfc.users.size(); i++) {
     cout << "UserName: " << hdfc.users[i].getName()
-         << " UserId: " << hdfc.users[i].getUserId() + 1
-         << " Pin:" << hdfc.users[i].pin << endl;
+         << " UserId: " << hdfc.users[i].getUserId()
+         << " Pin:" << hdfc.users[i].getPin() << endl;
   }
 }
 
@@ -173,14 +178,16 @@ void gui::loggedInMenu() {
 void gui::withdraw() {
   double amount;
   int pin;
+  int tries = 1;
   bool success = false;
   cout << "\nWithdraw" << endl;
   cout << "Enter Amount: ";
   cin >> amount;
-  while (success == false) {
+  while (success == false && tries != 4) {
     cout << "PIN: ";
     cin >> pin;
     success = hdfc.comparePin(loginedUser, pin);
+    tries++;
   }
   if (success) {
     int debitSuccess = hdfc.debitUser(loginedUser, amount);
@@ -198,14 +205,16 @@ void gui::withdraw() {
 void gui::deposit() {
   double amount;
   int pin;
+  int tries = 1;
   bool success = false;
   cout << "\nDeposit" << endl;
   cout << "Enter Amount: ";
   cin >> amount;
-  while (success == false) {
+  while (success == false && tries != 4) {
     cout << "PIN: ";
     cin >> pin;
     success = hdfc.comparePin(loginedUser, pin);
+    tries++;
   }
   if (success) {
     hdfc.creditUser(loginedUser, amount);
@@ -218,9 +227,11 @@ void gui::deposit() {
 
 void gui::bootloader() {
   ifstream inputFile("users.txt");
+  int userIdCount = 1;
+  int logIdCount = 1;
 
   if (!inputFile.is_open()) {
-    cerr << "Error opening file!" << endl;
+    cerr << "Error opening file users!" << endl;
     return;
   }
 
@@ -230,6 +241,35 @@ void gui::bootloader() {
 
   while (inputFile >> u1) {
     hdfc.users.push_back(u1);
+  }
+
+  inputFile.close(); // Always close the file when done
+  inputFile.open("bankInfo.txt");
+
+  if (!inputFile.is_open()) {
+    cerr << "Error opening file bankInfo!" << endl;
+    return;
+  }
+  inputFile >> userIdCount;
+  inputFile >> logIdCount;
+  hdfc.setUserIdCount(userIdCount);
+  hdfc.setLogIdCount(logIdCount);
+
+
+  inputFile.close(); // Always close the file when done
+
+  inputFile.open("log.txt");
+  if (!inputFile.is_open()) {
+    cerr << "Error opening file log!" << endl;
+    return;
+  }
+
+  // File operations go here
+
+  transactionLog log(-1, -1, -1, -1);
+
+  while (inputFile >> log) {
+    hdfc.logBook.push_back(log);
   }
 
   inputFile.close(); // Always close the file when done
