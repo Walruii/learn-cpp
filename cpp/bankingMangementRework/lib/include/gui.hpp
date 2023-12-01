@@ -22,11 +22,11 @@ public:
   void loginUser();
   void createUser();
   void deleteUser();
-  void listUsers();
   void logoutUser();
   void withdraw();
   void deposit();
-  void bootloader();
+  bool bootloader();
+  bool checkPin(int pin) const;
 };
 
 #endif // GUI_HPP
