@@ -1,16 +1,14 @@
 #include <iostream>
+#include <vector>
 using namespace std;
 
-class Print {
-  int x;
-
-public:
-  Print(int _x) : x(_x) {}
-
-  void display() { cout <<  ++this.x << " "; }
-};
 int main() {
-  Print i(1);
-  i.display();
+  vector <int> stack;
+  stack.push_back(1);
+  stack.push_back(2);
+  stack.push_back(3);
+  cout << *(&stack.back());
+  stack.push_back(4);
+  cout << *(&stack.back());
   return 0;
 }

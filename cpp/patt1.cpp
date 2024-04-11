@@ -3,7 +3,7 @@ using namespace std;
 
 #define ROWS 14
 
-    int main() {
+int main() {
 
   for (int i = ROWS; i > 0; i--) {
     for (int j = i; j > 0; j--) {
