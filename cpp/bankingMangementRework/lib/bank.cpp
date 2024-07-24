@@ -77,10 +77,7 @@ bool bank::addTransaction(int userId, double amount, int mode) {
 }
 
 void bank::showUserTransactions(int userId) const {
-  cout << "ID\t\t"
-       << "USERID\t\t"
-       << "MODE\t\t"
-       << "AMOUNT" << endl;
+  cout << "ID\t\t" << "USERID\t\t" << "MODE\t\t" << "AMOUNT" << endl;
 
   for (int i = 0; i < logBook.size(); i++) {
     if (logBook[i].getUserId() == userId) {
@@ -92,10 +89,7 @@ void bank::showUserTransactions(int userId) const {
 }
 
 void bank::showTransactions() const {
-  cout << "ID\t\t"
-       << "USERID\t\t"
-       << "MODE\t\t"
-       << "AMOUNT" << endl;
+  cout << "ID\t\t" << "USERID\t\t" << "MODE\t\t" << "AMOUNT" << endl;
 
   for (int i = 0; i < logBook.size(); i++) {
     string mode = (logBook[i].getMode()) ? "Credit" : "Debit";

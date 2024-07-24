@@ -4,6 +4,7 @@
 #include "./include/user.hpp"
 #include <fstream>
 #include <iostream>
+#include <limits>
 #include <vector>
 
 gui::gui() : loginInStatus(false), loginedUser(-1), loginedName("") {
