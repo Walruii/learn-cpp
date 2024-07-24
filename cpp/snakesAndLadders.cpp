@@ -196,7 +196,8 @@ void snakesAndLadders::movePlayer(int playerNo, int mode) {
   if (mode == 1)
     IncPos = dice();
   else {
-    std::cout << std::endl << "Enter The Number You Got From Your Dice!" << std::endl;
+    std::cout << std::endl
+              << "Enter The Number You Got From Your Dice!" << std::endl;
     std::cin >> IncPos;
   }
   int playerPos = player->getPosOnBoard();
